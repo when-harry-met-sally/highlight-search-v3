@@ -3,28 +3,30 @@ import { elastic } from "../helpers/elastic";
 import { people } from "../data/people";
 
 const Main: React.FC = () => {
+  console.log(people);
+
   const [filter, setFilter] = useState();
 
   const handleApplyFilter = (e: any) => {
     setFilter(e.target.value);
   };
 
-  console.log(people);
   const criterias = [
     ["name"],
+    ["occupation"],
     ["address", "street"],
     ["address", "state"],
     ["address", "details", "yearDestroyed"]
   ];
 
-  let filtered = elastic(filter, people, criterias);
+  const filtered = elastic(filter, people, criterias);
 
   return (
     <div>
       <h2>Nested Object Explorer</h2>
       <div>
-        Filter: <input onChange={e => handleApplyFilter(e)} /> <span>({filtered.length}
-        ) Results</span>
+        Filter: <input onChange={e => handleApplyFilter(e)} />{" "}
+        <span>({filtered.length}) Results</span>
       </div>
 
       <br />
