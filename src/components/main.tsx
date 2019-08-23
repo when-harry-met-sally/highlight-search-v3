@@ -37,7 +37,7 @@ const Main: React.FC = () => {
           <div>
             {criteria.map((field, i) => (
               <span>
-                {field} {i === criteria.length - 1 ? null : "---> "}
+                {field} {i === criteria.length - 1 ? null : "--> "}
               </span>
             ))}
           </div>

@@ -64,7 +64,8 @@ export const elastic = (
     return null;
   };
 
-  if (!filter || !filter.trim()) {
+  filter = filter && filter.trim();
+  if (!filter){
     return list;
   }
   
