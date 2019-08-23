@@ -10,20 +10,40 @@ const Main: React.FC = () => {
   };
 
   console.log(people);
-
-  let filtered = elastic(filter, people, [
+  const criterias = [
     ["name"],
     ["address", "street"],
     ["address", "state"],
     ["address", "details", "yearDestroyed"]
-  ]);
+  ];
+
+  let filtered = elastic(filter, people, criterias);
 
   return (
     <div>
+      <h2>Nested Object Explorer</h2>
       <div>
-        Filter: <input onChange={e => handleApplyFilter(e)} />
+        Filter: <input onChange={e => handleApplyFilter(e)} /> <span>({filtered.length}
+        ) Results</span>
       </div>
-      <div>({filtered.length}) Results</div>
+
+      <br />
+      <div>
+        <hr />
+        <strong>Fields to Search ({criterias.length})</strong>
+        {criterias.map(criteria => (
+          <div>
+            {criteria.map((field, i) => (
+              <span>
+                {field} {i === criteria.length - 1 ? null : "> "}
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+      <hr />
+      <br />
+
       {filtered.map((person, i) => {
         return (
           <div key={i}>
@@ -82,12 +102,10 @@ const Main: React.FC = () => {
                 <div>
                   &emsp; &emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp; &emsp; }
                 </div>
-                <div>
-                &emsp; &emsp;   &emsp;&emsp; }
-                </div>
+                <div>&emsp; &emsp; &emsp;&emsp; }</div>
               </div>
             </div>
-            <span>{i === filtered.length -1 ? '}]' : '},'}</span>
+            <span>{i === filtered.length - 1 ? "}]" : "},"}</span>
           </div>
         );
       })}
