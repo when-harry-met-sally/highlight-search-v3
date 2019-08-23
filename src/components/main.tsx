@@ -27,9 +27,8 @@ const Main: React.FC = () => {
       {filtered.map((person, i) => {
         return (
           <div key={i}>
-            <br />
             <div>
-              {i === 0 ? "const people = " : null}
+              {i === 0 ? "const people = [" : null}
               {"{"}
             </div>
             <div>
@@ -83,9 +82,12 @@ const Main: React.FC = () => {
                 <div>
                   &emsp; &emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp; &emsp; }
                 </div>
+                <div>
+                &emsp; &emsp;   &emsp;&emsp; }
+                </div>
               </div>
             </div>
-            <div>{"},"}</div>
+            <span>{i === filtered.length -1 ? '}]' : '},'}</span>
           </div>
         );
       })}
