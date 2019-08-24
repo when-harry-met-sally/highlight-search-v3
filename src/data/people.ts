@@ -10,7 +10,8 @@ export const people = [
           yearBuilt: "1904",
           yearDestroyed: "Never"
         }
-      }
+      },
+      siblings: ['sophie']
     },
     {
       name: "John Moran",
@@ -23,7 +24,8 @@ export const people = [
           yearBuilt: "1904",
           yearDestroyed: "Never"
         }
-      }
+      },
+      siblings: ['sophie', 'josie', 'allie', 'sofia', 'gabriella']
     },
     {
       name: "Andrea Miles",
@@ -36,7 +38,8 @@ export const people = [
           yearBuilt: "1936",
           yearDestroyed: "2310"
         }
-      }
+      },
+      siblings: ['sophie', 'john']
     },
     {
       name: "Nick Gallion",
@@ -49,6 +52,7 @@ export const people = [
           yearBuilt: "1988",
           yearDestroyed: "Never"
         }
-      }
+      },
+      siblings: ['sophie', 'bob']
     }
   ];

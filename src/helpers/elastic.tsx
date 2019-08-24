@@ -1,11 +1,7 @@
 import React from "react";
 import * as _ from "lodash";
 
-export const elastic = (
-  filter: string,
-  list: any[],
-  paths: string[][]
-) => {
+export const elastic = (filter: string, list: any[], paths: string[][]) => {
   let filteredList: object[] = [];
 
   const getDeepField: any = (
@@ -14,18 +10,49 @@ export const elastic = (
     paths: string[],
     match: boolean
   ) => {
+    console.log(typeof nestedObject, paths);
     if (!nestedObject) {
       nestedObject = originalObject;
     }
     paths = _.cloneDeep(paths);
     if (paths.length > 1) {
       const field: any = paths.shift();
-      const deeper: any = getDeepField(originalObject, nestedObject[field], paths, match);
+      const deeper: any = getDeepField(
+        originalObject,
+        nestedObject[field],
+        paths,
+        match
+      );
       if (deeper) {
         return deeper;
       }
     }
-    const scanResults = scanDeepField(nestedObject[paths[0]]);
+    const scanTarget = nestedObject[paths[0]];
+
+    if (Array.isArray(scanTarget)) {
+      if (scanTarget.length === 0) {
+        return null;
+      }
+      if (typeof scanTarget[0] === "string") {
+        let matchFound = false;
+        scanTarget.forEach((item, i) => {
+          const scanResults = scanDeepField(item);
+          if (scanResults) {
+            nestedObject[paths[0]][i] = scanResults;
+            matchFound = true;
+          }
+        });
+        if (matchFound && !match) {
+          filteredList.push(originalObject);
+        }
+        return null;
+      }
+      if (typeof scanTarget[0] === 'object'){
+        console.log('array of objects');
+        return null;
+      }
+    }
+    const scanResults = scanDeepField(scanTarget);
     if (scanResults) {
       nestedObject[paths[0]] = scanResults;
       if (!match) {
@@ -65,10 +92,10 @@ export const elastic = (
   };
 
   filter = filter && filter.trim();
-  if (!filter){
+  if (!filter) {
     return list;
   }
-  
+
   filter = filter.trim();
   list = _.cloneDeep(list);
   list.forEach(object => {

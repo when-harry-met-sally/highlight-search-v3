@@ -16,7 +16,8 @@ const Main: React.FC = () => {
     ["occupation"],
     ["address", "street"],
     ["address", "state"],
-    ["address", "details", "yearDestroyed"]
+    ["address", "details", "yearDestroyed"],
+    ["siblings"]
   ];
 
   const filtered = elastic(filter, people, criterias);
@@ -104,7 +105,14 @@ const Main: React.FC = () => {
                 <div>
                   &emsp; &emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp; &emsp; }
                 </div>
-                <div>&emsp; &emsp; &emsp;&emsp; }</div>
+                <div>&emsp; &emsp; &emsp;&emsp; },</div>
+                <div>
+                  &emsp; <strong>siblings: [</strong>
+                  {person.siblings.map(
+                    (sibling: any, i: number) =>
+                      <span>{sibling}{i !== person.siblings.length - 1 ? ', ' : ']'}</span>
+                  )}
+                </div>
               </div>
             </div>
             <span>{i === filtered.length - 1 ? "}]" : "},"}</span>
